@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Task Reminder</string>
+    <string name="hint_task">Type a task, e.g. Homework at 5:00 pm</string>
+    <string name="add">Add</string>
+    <string name="speak_prompt">Speak your task, e.g. "I have to do my homework at 5 pm"</string>
+    <string name="no_speech">Voice input is not available on this phone</string>
+    <string name="empty_task">Please enter a task first</string>
+    <string name="notif_channel">Task reminders</string>
+    <string name="notif_title">Task reminder</string>
+    <string name="no_time">No time set</string>
+</resources>
