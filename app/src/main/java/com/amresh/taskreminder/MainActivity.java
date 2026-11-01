@@ -154,7 +154,10 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Liste
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menu_bin) {
+        if (id == R.id.menu_memory) {
+            startActivity(new Intent(this, MemoryActivity.class));
+            return true;
+        } else if (id == R.id.menu_bin) {
             startActivity(new Intent(this, BinActivity.class));
             return true;
         } else if (id == R.id.menu_theme_mode) {
@@ -260,12 +263,13 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Liste
         AppDatabase.IO.execute(() -> {
             try {
                 List<Task> all = db.taskDao().getAll();
-                String json = BackupManager.export(app, all);
+                List<Memory> memories = db.memoryDao().getAll();
+                String json = BackupManager.export(app, all, memories);
                 try (OutputStream os = getContentResolver().openOutputStream(uri, "wt")) {
                     if (os == null) throw new IOException("No output stream");
                     os.write(json.getBytes(StandardCharsets.UTF_8));
                 }
-                toast(getString(R.string.backup_done, all.size()));
+                toast(getString(R.string.backup_done_mem, all.size(), memories.size()));
             } catch (Exception e) {
                 toast(getString(R.string.backup_failed));
             }
@@ -279,7 +283,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.Liste
                 String json = readAll(uri);
                 final BackupManager.Result r = BackupManager.importJson(app, db, json);
                 runOnUiThread(() -> applyRestoredSettings(r));
-                toast(getString(R.string.restore_done, r.added, r.skipped));
+                toast(getString(R.string.restore_done_mem, r.added, r.skipped, r.memAdded, r.memSkipped));
             } catch (JSONException e) {
                 toast(getString(R.string.restore_bad_file));
             } catch (Exception e) {

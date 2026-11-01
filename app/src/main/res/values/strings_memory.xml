@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Memory feature (drop-in file, no changes needed to strings.xml) -->
+    <string name="menu_memory">Memory</string>
+    <string name="mem_title">Memory</string>
+    <string name="mem_info">Keep facts and info you want to remember. These never send reminders.</string>
+    <string name="mem_search_hint">Search memories</string>
+    <string name="mem_empty">Nothing saved yet. Tap + to add a memory.</string>
+    <string name="mem_add">Add memory</string>
+    <string name="mem_edit">Edit memory</string>
+    <string name="mem_hint_title">Title, e.g. Wi-Fi password</string>
+    <string name="mem_hint_content">What do you want to remember?</string>
+    <string name="mem_hint_tag">Tag (optional), e.g. Home</string>
+    <string name="mem_pin">Pin to top</string>
+    <string name="mem_all_tags">All</string>
+    <string name="mem_untagged">Untagged</string>
+    <string name="mem_copied">Copied to clipboard</string>
+    <string name="mem_saved">Memory saved</string>
+    <string name="mem_title_required">Please enter a title</string>
+    <string name="mem_delete_title">Delete this memory?</string>
+    <string name="mem_delete_msg">This cannot be undone.</string>
+    <string name="mem_deleted">Memory deleted</string>
+    <string name="mem_meta_format">%1$s · Saved %2$s</string>
+    <string name="mem_no_match">No memories match your search</string>
+    <string name="mem_delete_yes">Delete</string>
+
+    <!-- Backup/restore now include memories -->
+    <string name="backup_done_mem">Backup saved (%1$d tasks, %2$d memories)</string>
+    <string name="restore_done_mem">Restored %1$d tasks (%2$d already existed) and %3$d memories (%4$d already existed)</string>
+</resources>

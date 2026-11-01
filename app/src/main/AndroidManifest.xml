@@ -33,6 +33,12 @@
             android:exported="false"
             android:label="@string/bin_title" />
 
+        <activity
+            android:name=".MemoryActivity"
+            android:exported="false"
+            android:label="@string/mem_title"
+            android:parentActivityName=".MainActivity" />
+
         <receiver
             android:name=".ReminderReceiver"
             android:exported="false" />

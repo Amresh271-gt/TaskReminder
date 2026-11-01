@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- NEW in v3 -->
+    <item
+        android:id="@+id/menu_memory"
+        android:title="@string/menu_memory"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/menu_bin"
         android:title="@string/menu_bin"

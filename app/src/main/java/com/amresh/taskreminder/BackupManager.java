@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/** Exports tasks and settings to a JSON string and restores them again. */
+/** Exports tasks, memories and settings to a JSON string and restores them again. */
 public class BackupManager {
 
     private static final String APP_ID = "TaskReminder";
@@ -20,15 +20,17 @@ public class BackupManager {
     public static class Result {
         public int added;
         public int skipped;
+        public int memAdded;
+        public int memSkipped;
         public String userName;   // null when the backup had no name
         public Integer nightMode; // null when the backup had no valid value
         public Integer accent;    // null when the backup had no valid value
     }
 
-    public static String export(Context ctx, List<Task> tasks) throws JSONException {
+    public static String export(Context ctx, List<Task> tasks, List<Memory> memories) throws JSONException {
         JSONObject root = new JSONObject();
         root.put("app", APP_ID);
-        root.put("formatVersion", 1);
+        root.put("formatVersion", 2);
         root.put("exportedAt", System.currentTimeMillis());
 
         JSONObject settings = new JSONObject();
@@ -48,6 +50,19 @@ public class BackupManager {
             arr.put(o);
         }
         root.put("tasks", arr);
+
+        JSONArray memArr = new JSONArray();
+        for (Memory m : memories) {
+            JSONObject o = new JSONObject();
+            o.put("title", m.title == null ? "" : m.title);
+            o.put("content", m.content == null ? "" : m.content);
+            o.put("tag", m.tag == null ? "" : m.tag);
+            o.put("pinned", m.pinned);
+            o.put("createdAt", m.createdAt);
+            o.put("updatedAt", m.updatedAt);
+            memArr.put(o);
+        }
+        root.put("memories", memArr);
         return root.toString(2);
     }
 
@@ -119,7 +134,41 @@ public class BackupManager {
             }
             r.added++;
         }
+
+        // Memories (older v1 backups have none, which is fine).
+        Set<String> existingMem = new HashSet<>();
+        for (Memory m : db.memoryDao().getAll()) {
+            existingMem.add(memKey(m.title, m.content));
+        }
+        JSONArray memArr = root.optJSONArray("memories");
+        if (memArr != null) {
+            for (int i = 0; i < memArr.length(); i++) {
+                JSONObject o = memArr.optJSONObject(i);
+                if (o == null) continue;
+                String title = o.optString("title", "").trim();
+                if (title.isEmpty()) continue;
+                String content = o.optString("content", "");
+                if (!existingMem.add(memKey(title, content))) {
+                    r.memSkipped++;
+                    continue;
+                }
+                String tag = o.optString("tag", "").trim();
+                Memory m = new Memory();
+                m.title = title;
+                m.content = content;
+                m.tag = tag.isEmpty() ? null : tag;
+                m.pinned = o.optBoolean("pinned", false);
+                m.createdAt = o.optLong("createdAt", now);
+                m.updatedAt = o.optLong("updatedAt", m.createdAt);
+                db.memoryDao().insert(m);
+                r.memAdded++;
+            }
+        }
         return r;
+    }
+
+    private static String memKey(String title, String content) {
+        return (title == null ? "" : title) + "|" + (content == null ? "" : content);
     }
 
     private static String key(String title, long due, long deletedAt) {
