@@ -2,7 +2,10 @@ name: Build APK
 
 on:
   push:
-    branches: [ main, master ]
+    # main = latest tested version; v1, v2, ... = saved version branches.
+    branches: [ main, master, 'v*' ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -29,5 +32,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: TaskReminder-debug-apk
+          # The branch name is part of the file name so v1 and v2 builds are easy to tell apart.
+          name: TaskReminder-${{ github.head_ref || github.ref_name }}-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
