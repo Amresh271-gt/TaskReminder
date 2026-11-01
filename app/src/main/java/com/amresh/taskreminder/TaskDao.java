@@ -2,7 +2,6 @@ package com.amresh.taskreminder;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
@@ -17,12 +16,22 @@ public interface TaskDao {
     @Update
     void update(Task task);
 
-    @Delete
-    void delete(Task task);
+    /** Active tasks (not in the recycle bin). */
+    @Query("SELECT * FROM tasks WHERE deletedAt = 0 ORDER BY done ASC, CASE WHEN dueMillis = 0 THEN 1 ELSE 0 END, dueMillis ASC, id DESC")
+    LiveData<List<Task>> observeActive();
 
-    @Query("SELECT * FROM tasks ORDER BY done ASC, CASE WHEN dueMillis = 0 THEN 1 ELSE 0 END, dueMillis ASC, id DESC")
-    LiveData<List<Task>> observeAll();
+    /** Recycle bin, most recently deleted first. */
+    @Query("SELECT * FROM tasks WHERE deletedAt > 0 ORDER BY deletedAt DESC")
+    LiveData<List<Task>> observeBin();
 
-    @Query("SELECT * FROM tasks WHERE done = 0 AND dueMillis > 0")
+    /** Everything (active and bin), used for backups and de-duplication on restore. */
+    @Query("SELECT * FROM tasks")
+    List<Task> getAll();
+
+    @Query("SELECT * FROM tasks WHERE done = 0 AND dueMillis > 0 AND deletedAt = 0")
     List<Task> getPendingWithTime();
+
+    /** Permanently removes bin items deleted before the cutoff time. */
+    @Query("DELETE FROM tasks WHERE deletedAt > 0 AND deletedAt < :cutoff")
+    int purgeBinOlderThan(long cutoff);
 }

@@ -13,6 +13,7 @@
     </queries>
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -26,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".BinActivity"
+            android:exported="false"
+            android:label="@string/bin_title" />
 
         <receiver
             android:name=".ReminderReceiver"

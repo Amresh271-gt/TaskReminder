@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Pulls a due time out of typed or spoken text such as
  * "Hey XYZ, I have to do my homework before 5:00 a.m."
- * Supports: "5 pm", "5:30 a.m.", "17:30", "in 20 minutes", "in 2 hours", "tomorrow".
+ * Supports: "5 pm", "5:30 a.m.", "17:30", "in 20 minutes", "after 2 minutes", "in 2 hours", "tomorrow".
  */
 public class TimeParser {
 
@@ -25,7 +25,7 @@ public class TimeParser {
             "(\\d{1,2})(?:[:.](\\d{2}))?\\s*([ap])\\.?\\s?m\\.?", Pattern.CASE_INSENSITIVE);
     private static final Pattern H24 = Pattern.compile("\\b([01]?\\d|2[0-3]):([0-5]\\d)\\b");
     private static final Pattern RELATIVE = Pattern.compile(
-            "in\\s+(\\d{1,3})\\s*(minute|minutes|min|mins|hour|hours|hr|hrs)\\b", Pattern.CASE_INSENSITIVE);
+            "\\b(?:in|after)\\s+(\\d{1,3})\\s*(minute|minutes|min|mins|hour|hours|hr|hrs)\\b", Pattern.CASE_INSENSITIVE);
     private static final Pattern PREFIX = Pattern.compile(
             "^(hey|hi|hello|ok|okay)\\s+\\w+[,]?\\s*", Pattern.CASE_INSENSITIVE);
     private static final Pattern LEAD = Pattern.compile(

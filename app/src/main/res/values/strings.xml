@@ -9,4 +9,57 @@
     <string name="notif_channel">Task reminders</string>
     <string name="notif_title">Task reminder</string>
     <string name="no_time">No time set</string>
+
+    <!-- v2: general -->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
+
+    <!-- v2: menu -->
+    <string name="menu_bin">Recycle bin</string>
+    <string name="menu_theme_mode">Theme mode</string>
+    <string name="menu_accent">Accent colour</string>
+    <string name="menu_name">Change my name</string>
+    <string name="menu_backup">Backup data</string>
+    <string name="menu_restore">Restore data</string>
+
+    <!-- v2: edit task -->
+    <string name="edit_task">Edit task</string>
+    <string name="hint_title">Task title</string>
+    <string name="hint_notes">Notes (optional)</string>
+    <string name="set_time">Set date &amp; time</string>
+    <string name="clear_time">No time</string>
+
+    <!-- v2: recycle bin -->
+    <string name="bin_title">Recycle bin</string>
+    <string name="bin_info">Deleted tasks are kept here for 15 days as a record, then removed automatically.</string>
+    <string name="bin_empty">The recycle bin is empty</string>
+    <string name="moved_to_bin">Moved to recycle bin (kept for 15 days)</string>
+
+    <!-- v2: name and greeting -->
+    <string name="ask_name_title">What should I call you?</string>
+    <string name="hint_name">Your name</string>
+    <string name="subtitle_none">No tasks yet. Add one below.</string>
+    <string name="subtitle_all_done">All tasks done. Great job!</string>
+    <plurals name="subtitle_left">
+        <item quantity="one">%d task left</item>
+        <item quantity="other">%d tasks left</item>
+    </plurals>
+
+    <!-- v2: themes -->
+    <string name="mode_system">System default</string>
+    <string name="mode_light">Light</string>
+    <string name="mode_dark">Dark</string>
+    <string name="accent_purple">Purple (default)</string>
+    <string name="accent_teal">Teal</string>
+    <string name="accent_blue">Blue</string>
+    <string name="accent_orange">Orange</string>
+    <string name="accent_pink">Pink</string>
+
+    <!-- v2: backup and restore -->
+    <string name="backup_done">Backup saved (%1$d tasks)</string>
+    <string name="backup_failed">Could not save the backup</string>
+    <string name="restore_done">Restored %1$d tasks (%2$d already existed)</string>
+    <string name="restore_bad_file">This file is not a Task Reminder backup</string>
+    <string name="restore_failed">Could not read the backup file</string>
 </resources>
