@@ -10,8 +10,19 @@ android {
         applicationId "com.amresh.taskreminder"
         minSdk 24
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "2.1"
+    }
+
+     // Same debug signing key for every build, so a new APK installs over the old one
+    // (GitHub Actions would otherwise create a fresh random key on each run).
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
     }
 
     buildTypes {

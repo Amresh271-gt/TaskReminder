@@ -1,5 +1,6 @@
 package com.amresh.taskreminder;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -14,4 +15,11 @@ public class Task {
     public long dueMillis;
 
     public boolean done;
+
+    /** Time the task was moved to the recycle bin (epoch millis), or 0 while it is active. */
+    @ColumnInfo(defaultValue = "0")
+    public long deletedAt;
+
+    /** Optional free-text notes for the task. */
+    public String notes;
 }

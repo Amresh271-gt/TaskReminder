@@ -19,6 +19,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Holder> {
     public interface Listener {
         void onToggle(Task task, boolean done);
 
+        void onEdit(Task task);
+
         void onDelete(Task task);
     }
 
@@ -50,6 +52,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Holder> {
                 ? h.title.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
                 : h.title.getPaintFlags() & ~android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
 
+        if (t.notes != null && !t.notes.trim().isEmpty()) {
+            h.notes.setText(t.notes);
+            h.notes.setVisibility(View.VISIBLE);
+        } else {
+            h.notes.setVisibility(View.GONE);
+        }
+
         if (t.dueMillis > 0) {
             h.time.setText(DateFormat.format("EEE, d MMM, h:mm a", t.dueMillis));
         } else {
@@ -59,6 +68,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Holder> {
         h.check.setOnCheckedChangeListener(null);
         h.check.setChecked(t.done);
         h.check.setOnCheckedChangeListener((b, checked) -> listener.onToggle(t, checked));
+        h.edit.setOnClickListener(v -> listener.onEdit(t));
         h.delete.setOnClickListener(v -> listener.onDelete(t));
     }
 
@@ -70,14 +80,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.Holder> {
     static class Holder extends RecyclerView.ViewHolder {
         final CheckBox check;
         final TextView title;
+        final TextView notes;
         final TextView time;
+        final Button edit;
         final Button delete;
 
         Holder(View v) {
             super(v);
             check = v.findViewById(R.id.cbDone);
             title = v.findViewById(R.id.tvTitle);
+            notes = v.findViewById(R.id.tvNotes);
             time = v.findViewById(R.id.tvTime);
+            edit = v.findViewById(R.id.btnEdit);
             delete = v.findViewById(R.id.btnDelete);
         }
     }
