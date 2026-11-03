@@ -3,7 +3,7 @@ name: Build APK
 on:
   push:
     # main = latest tested version; v1, v2, ... = saved version branches.
-    branches: [ main, master, 'v*' ]
+    branches: [ main, master, 'v*', 'V*' ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
