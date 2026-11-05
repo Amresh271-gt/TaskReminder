@@ -39,6 +39,24 @@
             android:label="@string/mem_title"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".VoiceCommandActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <service
+            android:name=".CommandTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_tile_mic"
+            android:label="@string/cmd_tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
         <receiver
             android:name=".ReminderReceiver"
             android:exported="false" />
